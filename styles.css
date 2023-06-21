@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+  }
+  h2 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+  .about-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .art-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .art-item {
+    margin: 10px;
+    text-align: center;
+  }
+  .art-item img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+  }
+  .art-item .details {
+    margin-top: 10px;
+  }
+  .art-item .details p {
+    margin: 5px 0;
+  }
+  .art-item .buttons {
+    margin-top: 10px;
+  }
+  .art-item .buttons button {
+    margin-right: 5px;
+  }
+  .facebook-share {
+    display: inline-block;
+    background-color: #4267B2;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .upload-form input,
+    .upload-form textarea {
+      display: block;
+      align-items: center;
+      margin-bottom: 10px;
+      width: 50%;
+      padding: 5px;
+    }
+    .upload-form button {
+      padding: 10px;
+    }

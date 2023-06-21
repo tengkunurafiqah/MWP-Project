@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Art Gallery</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- should have "arte lisa - the urban online art gallery" -->    
+<!-- should have header that user can click and direct to each div. ex: "about." directs to : about div --> 
+
+<!-- gallery div --> 
+<h2>gallery.</h2>
+  <div class="art-container"> 
+    <div class="art-item">
+        <img src="images/titik merah.jpg" alt="Artwork 1">
+        <div class="details">
+          <p>Title: Titik Merah</p>
+          <p>Artist: Ajim Juxta</p>
+          <p>Information: titikmerah</p>
+        </div>
+        <div class="buttons">
+          <button class="download">Download</button>
+          <a class="facebook-share" href="#" target="_blank">Share on Facebook</a>
+        </div>
+    </div>
+    <div class="art-item">
+        <img src="images/unity in hiding.jpg" alt="Artwork 2">
+        <div class="details">
+          <p>Title: Unity in Hiding</p>
+          <p>Artist: Eko Nugroho</p>
+          <p>Information: 2018</p>
+        </div>
+        <div class="buttons">
+          <button class="download">Download</button>
+          <a class="facebook-share" href="#" target="_blank">Share on Facebook</a>
+        </div>
+    </div>
+    <!-- Existing arts will be dynamically added here -->
+  </div>
+
+   <!-- about div -->
+  <div>
+    <h2>about.</h2>
+    <p>Photographers, painters, tattooists, graphic designers, illustrators, textile artists, cinematographers, sculptors have this free space to upload their arts and products. </p>
+    <p>Feel free to contacts us if you require any assistance.</p>
+  </div>
+
+   <!-- upload div -->
+  <div>
+    <h2>upload.</h2>
+    <form class="upload-form">
+        <input type="text" name="title" placeholder="Title" required>
+        <input type="text" name="artist" placeholder="Artist" required>
+        <textarea name="information" placeholder="Art Information" rows="4" required></textarea>
+        <input type="file" name="image" required>
+        <button type="submit">Upload</button>
+    </form>
+  </div>
+
+   <!-- contact div -->
+  <div>
+    <h2>contact.</h2>
+    <p>T. 123 - 456 - 7890 | info@my-domain.com</p>
+    <form class="upload-form">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Message" rows="4" required></textarea>
+    
+        <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to create an art item element
+    function createArtItem(art) {
+      const artItem = document.createElement('div');
+      artItem.className = 'art-item';
+
+      const image = document.createElement('img');
+      image.src = art.image;
+      image.alt = art.title;
+      artItem.appendChild(image);
+
+      const details = document.createElement('div');
+      details.className = 'details';
+
+      const title = document.createElement('p');
+      title.textContent = `Title: ${art.title}`;
+      details.appendChild(title);
+
+      const artist = document.createElement('p');
+      artist.textContent = `Artist: ${art.artist}`;
+      details.appendChild(artist);
+
+      const information = document.createElement('p');
+      information.textContent = `Information: ${art.information}`;
+      details.appendChild(information);
+
+      artItem.appendChild(details);
+
+      const buttons = document.createElement('div');
+      buttons.className = 'buttons';
+
+      const downloadButton = document.createElement('button');
+      downloadButton.textContent = 'Download';
+      downloadButton.addEventListener('click', () => handleDownload(art.image));
+      buttons.appendChild(downloadButton);
+
+      const facebookShareButton = document.createElement('a');
+      facebookShareButton.href = '#';
+      facebookShareButton.className = 'facebook-share';
+      facebookShareButton.textContent = 'Share on Facebook';
+      facebookShareButton.addEventListener('click', () => handleFacebookShare(art));
+      buttons.appendChild(facebookShareButton);
+
+      artItem.appendChild(buttons);
+
+      return artItem;
+    }
+
+    // Function to handle the download button click
+    function handleDownload(imageSrc) {
+      const link = document.createElement('a');
+      link.href = imageSrc;
+      link.download = 'artwork.jpg';
+      link.click();
+    }
+
+    // Function to handle the Facebook share button click
+    function handleFacebookShare(art) {
+      const { image, title, artist, information } = art;
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(image)}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(artist)}&caption=${encodeURIComponent(information)}`;
+      window.open(shareUrl, '_blank');
+    }
+
+    // Function to handle the upload form submission
+    function handleUpload(event) {
+      event.preventDefault();
+
+      // Retrieve form values
+      const form = event.target;
+      const title = form.title.value;
+      const artist = form.artist.value;
+      const information = form.information.value;
+      const image = form.image.files[0];
+
+      // Create a FileReader to read the image file
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const uploadedImage = e.target.result;
+
+        // Create the art object
+        const art = {
+          title,
+          artist,
+          information,
+          image: uploadedImage
+        };
+
+        // Display the new art item
+        const artContainer = document.querySelector('.art-container');
+        const artItem = createArtItem(art);
+        artContainer.appendChild(artItem);
+
+        // Reset the form
+        form.reset();
+      };
+
+      reader.readAsDataURL(image);
+    }
+
+    // Add event listener to the upload form
+    const uploadForm = document.querySelector('.upload-form');
+    uploadForm.addEventListener('submit', handleUpload);
+  </script>
+</body>
+</html>
